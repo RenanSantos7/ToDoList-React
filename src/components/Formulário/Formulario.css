@@ -1,12 +1,12 @@
+.add-nova-tarefa {
+    padding-block: 1rem;
+}
+
 .form-nova-tarefa {
     display: flex;
     gap: 1rem;
     width: 100%;
-}
-
-.add-nova-tarefa {
-    padding-block: 1rem;
-}
+}    
 
 #btaddtarefa {
     --tamanho: 42px;

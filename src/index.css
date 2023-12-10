@@ -35,3 +35,25 @@ body {
     /*! height: 100vh; */
     overflow: hidden;
 }
+
+
+input[type=text] {
+    background-color: var(--bg-input);
+    font-size: var(--tamtexto);
+    padding: .6rem;
+    width: 100%;
+    border-bottom: 1px solid var(--cor-destaque);
+    margin-bottom: 1px;
+    transition: all 0.6s ease-in-out;
+    color: var(--cor-texto);
+}
+
+input[type=text]:focus {
+    border-bottom-width: 2px;
+    margin-bottom: 0;
+    background-color: var(--bg-input2);
+}
+
+input[type=text]:hover {
+    background-color: var(--bg-input2);
+}
