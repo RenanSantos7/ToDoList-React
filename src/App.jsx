@@ -27,12 +27,16 @@ function App() {
   ])
 
   const [pesquisa, setPesquisa] = useState('')
+  const [categoria, setCategoria] = useState(null)
+  const [textoNovaTarefa, setTextoNovaTarefa] = useState('')
 
-  function criaNovaTarefa(objeto) {
+  function criaNovaTarefa() {
     if (textoNovaTarefa != "") {
       const novaTarefa = {
-        checked: false,
-        texto: textoNovaTarefa
+        id: Math.floor(Math.random * 1000),
+        nome: textoNovaTarefa,
+        categoria: categoria,
+        completa: false
       }
 
       setTarefas([...tarefas, novaTarefa])
@@ -75,6 +79,9 @@ function App() {
       <div className="baixo">
         <Formulario
           criaNovaTarefa={criaNovaTarefa}
+          textoNovaTarefa={textoNovaTarefa}
+          setTextoNovaTarefa={setTextoNovaTarefa}
+          setCategoria={setCategoria}
         />
       </div>
     </main>

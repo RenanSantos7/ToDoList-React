@@ -8,7 +8,7 @@
     width: 100%;
 }    
 
-#btaddtarefa {
+.btaddtarefa {
     --tamanho: 42px;
     font-size: var(--tamtexto);
     background-color: var(--cor-destaque);
@@ -20,7 +20,7 @@
     align-items: center;
 }
 
-#btaddtarefa img {
+.btaddtarefa img {
     width: 50%;
     color: var(--bg-main);
 }

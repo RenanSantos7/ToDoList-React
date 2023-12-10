@@ -1,18 +1,21 @@
 import './Formulario.css'
-import { useState } from 'react'
 import mais from '../../assets/plus-solid.svg'
+import CaixaSelecao from '../CaixaSelecao/CaixaSelecao'
 
-export default function Formulario({ criaNovaTarefa }) {
-    const [textoNovaTarefa, setTextoNovaTarefa] = useState('')
-
-    function adicionarTarefa(evento) {
+export default function Formulario({ criaNovaTarefa, textoNovaTarefa, setTextoNovaTarefa, setCategoria }) {
+    
+    function aoSubmeter(evento) {
         evento.preventDefault()
-        criaNovaTarefa(objeto)
+        criaNovaTarefa()
     }
 
     return (
         <section className='add-nova-tarefa'>
-            <form className='form-nova-tarefa' onSubmit={evt => { adicionarTarefa(evt) }}>
+            <CaixaSelecao
+                setCategoria={setCategoria}
+            />
+
+            <form className='form-nova-tarefa' onSubmit={evt => { aoSubmeter(evt) }}>
                 <input
                     id="txtnovatarefa"
                     type="text"
@@ -23,8 +26,7 @@ export default function Formulario({ criaNovaTarefa }) {
 
                 <button
                     type="submit"
-                    id="btaddtarefa"
-                    className='circulo quadrado'
+                    className='circulo quadrado btaddtarefa'
                 >
                     <img src={mais} />
                 </button>
