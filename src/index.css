@@ -1,1 +1,42 @@
 @import url('https://renan-santos.netlify.app/styles/reset.css');
+
+:root {
+    --bg: #fafafa;
+    --bg-fundo: var(--cinza1);
+    --texto: #2b2b2b;
+    --titulo: #101010;
+    --cinza1: #f2f2f2;
+    --cinza2: #eee;
+    --cinza3: #ccc;
+    --cinza4: #b2b2b2;
+    --cinza5: #999;
+    --cinza6: #747474;
+
+    --corDestaque: hsl(224, 77%, 58%);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        --bg: #3c3c3c;
+        --texto: #f0f0f0;
+        --titulo: #101010;
+
+        --cinza1: #2b2b2b;
+        --cinza3: #3c3c3c;
+        --cinza5: #747474;
+        --cinza6: #b2b2b2;
+    
+        --corDestaque: hsl(224, 65%, 61%);
+    }
+}
+
+body {
+    background-color: var(--bg-fundo);
+    color: var(--texto)
+}
+
+#root {
+    display: flex;
+    align-items: flex-end;
+    height: 100dvh;
+}

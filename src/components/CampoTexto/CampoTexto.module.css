@@ -1,0 +1,22 @@
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem
+}
+
+.etiqueta {
+    font-weight: 600;
+}
+
+.entrada {
+    border: 1px solid var(--cinza5);
+    padding: .5rem;
+    border-radius: .5rem;
+    background-color: transparent;
+    transition: all .3s ease-in-out;
+}
+
+.entrada:focus {
+    outline: none;
+    border: 2px solid var(--corDestaque);
+}

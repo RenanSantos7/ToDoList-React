@@ -1,0 +1,6 @@
+.botao {
+    background-color: var(--corDestaque);
+    color: white;
+    padding: .75rem;
+    border-radius: .5rem;
+}
