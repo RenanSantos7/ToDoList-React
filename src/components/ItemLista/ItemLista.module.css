@@ -17,6 +17,7 @@
 .campo {
     display: flex;
     gap: 1ch;
+    align-items: center;
     flex: 1;
 }
 
@@ -37,4 +38,10 @@
     background-color: transparent;
 
     border: 1px solid red;
+}
+
+.tags {
+    display: flex;
+    gap: 1ch;
+    align-items: center;
 }

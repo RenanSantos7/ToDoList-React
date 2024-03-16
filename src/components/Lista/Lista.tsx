@@ -1,6 +1,6 @@
 import styles from './Lista.module.css'
 import { useContext } from "react";
-import { Tarefa } from "../../types/types.ts"
+import { ITarefa } from "../../types/types.ts"
 import ItemLista from "../ItemLista/ItemLista.tsx"
 import { TarefasContext } from "../../contexts/TarefasContext.tsx";
 
@@ -9,7 +9,7 @@ export default function Lista() {
 
     return (
         <div className={styles.box}>
-            {tarefas.map((tarefa: Tarefa, i: number) => (
+            {tarefas.map((tarefa: ITarefa, i: number) => (
                 <ItemLista
                     key={i}
                     item={tarefa}

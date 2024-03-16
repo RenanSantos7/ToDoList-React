@@ -1,10 +1,6 @@
-export interface Tarefa {
+export interface ITarefa {
 	titulo: string
 	completo: boolean
 	id: number
-}
-
-export interface ITarefasContext {
-	tarefas: Tarefa[],
-	setTarefas: any
+	tags?: string[]
 }

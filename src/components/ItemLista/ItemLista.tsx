@@ -1,58 +1,85 @@
 import styles from './ItemLista.module.css'
-import { Tarefa } from '../../types/types.ts'
+import { ITarefa } from '../../types/types.ts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState, useEffect, ChangeEvent, useRef } from 'react'
 import { TarefasContext } from '../../contexts/TarefasContext.tsx'
+import Tags from '../Tags/Tags.tsx'
+import CheckBox from '../CheckBox/CheckBox.tsx'
 
 interface ItemListaProps {
-	item: Tarefa
+	item: ITarefa
 }
-
-type estado = [getter: boolean, setter: (arg: boolean) => any]
 
 export default function ItemLista({ item }: ItemListaProps) {
 	const { tarefas, setTarefas } = useContext(TarefasContext)
-	const [editavel, setEditavel]: estado = useState(false)
+	const [editavel, setEditavel] = useState(false)
 	const [itemTexto, setItemTexto] = useState('')
-	const textoRef = useRef()
+	const textoRef = useRef<HTMLInputElement>()
+	const itemCompleto = {
+		opacity: '0.5',
+		textDecoration: 'line-through',
+		fontStyle: 'italic'
+	}
 
-	function aoChecar(evt: React.ChangeEvent) {
-		const tarefasMod = tarefas.map(tarefa => {
-			tarefa.id === item.id ? (tarefa.completo = !tarefa.completo) : tarefa
+	function aoChecar() {
+		const tarefasMod = tarefas.map((tarefa: ITarefa) => {
+			if (tarefa.id === item.id) {
+				return {...tarefa, completo: !tarefa.completo}
+			} else {
+				return tarefa
+			}
 		})
 
 		setTarefas(tarefasMod)
 	}
 
 	function editar() {
-		setEditavel(true)
+		if (!item.completo) setEditavel(true)
+	}
+
+	useEffect(() => {
 		const texto: HTMLInputElement = textoRef.current
-		texto.addEventListener('keydown', (event: KeyboardEvent) => {
+		
+		function aoApertarEnter(event: KeyboardEvent) {
 			if (event.key === 'Enter') {
 				salvarEdicao(texto)
+				setEditavel(false)
 			}
-		})
-	}
+		}
+		
+		editavel 
+			? texto.addEventListener('keydown', aoApertarEnter)
+			: texto?.removeEventListener('keydown', aoApertarEnter)
+	}, [editavel])
+	
 
 	function salvarEdicao(elem: HTMLInputElement) {
 		setItemTexto(elem.value)
-		const tarefasMod = tarefas.map(tarefa => {
-			tarefa.id === item.id ? (tarefa.titulo = itemTexto) : tarefa
+		const tarefasMod = tarefas.map((tarefa: ITarefa) => {
+			if (tarefa.id === item.id) {
+				return tarefa.titulo = itemTexto
+			} else {
+				return tarefa
+			}
 		})
 
 		setTarefas(tarefasMod)
 	}
 
 	function excluir() {
-		setTarefas((prev: Tarefa[]) => prev.filter(prevItem => prevItem.id !== item.id))
+		setTarefas((prev: ITarefa[]) => prev.filter(prevItem => prevItem.id !== item.id))
 	}
 
 	return (
 		<div className={styles.container}>
 			<label className={styles.campo}>
-				<input type='checkbox' checked={item.completo} onChange={aoChecar} />
-				<span>
+				<CheckBox
+					aoMudar={aoChecar}
+				/>
+				<span
+					style={item.completo ? itemCompleto : {}}
+				>
 					{editavel
 						? <input
 							value={itemTexto}
@@ -67,9 +94,17 @@ export default function ItemLista({ item }: ItemListaProps) {
 						: item.titulo
 					}
 				</span>
+
+				<span className={styles.tags}>
+					{item.tags && 
+						item.tags.map(tag => (
+							<Tags titulo={tag} /> 
+						))
+					}
+				</span>
 			</label>
 			<div className={styles.controles}>
-				<FontAwesomeIcon icon={faPencil} onClick={editar} />
+				{/* <FontAwesomeIcon icon={faPencil} onClick={editar} /> */}
 
 				<FontAwesomeIcon icon={faTrash} onClick={excluir} />
 			</div>

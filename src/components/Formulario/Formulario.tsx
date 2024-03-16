@@ -1,6 +1,6 @@
 import styles from './Formulario.module.css'
-import { FormEvent, useContext, useState } from 'react'
-import { Tarefa } from '../../types/types.ts'
+import { FormEvent, useContext, useState, useEffect } from 'react'
+import { ITarefa } from '../../types/types.ts'
 import Botao from '../Botao/Botao.tsx'
 import CampoTexto from '../CampoTexto/CampoTexto.tsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,19 +10,41 @@ import { TarefasContext } from '../../contexts/TarefasContext.tsx'
 export default function Formulario() {
 	const { tarefas, setTarefas } = useContext(TarefasContext)
 
-	const [novaTarefa, setNovaTarefa] = useState<Tarefa>({ id: tarefas.length, titulo: '', completo: false })
+	const [entrada, setEntrada] = useState('')
 
 	function cadastrarNovaTarefa(evt: FormEvent) {
 		evt.preventDefault()
-		if (novaTarefa.titulo.length > 0) {
-			setTarefas((prev: Tarefa[]) => [...prev, novaTarefa])
-			setNovaTarefa({ id: tarefas.length, titulo: '', completo: false })
+		if (entrada) {
+			const palavras = entrada.split(/\s+/)
+
+			const titulo = palavras
+				.filter((palavra: string) => !palavra.startsWith('#'))
+				.join(' ')
+			
+			const tags = palavras
+				.filter((palavra: string) => palavra.startsWith('#'))
+				.map(tag => tag.trim())
+
+			const novaTarefa = {
+				id: tarefas.length,
+				titulo: titulo,
+				completo: false,
+				tags: tags
+			}
+
+			console.log(novaTarefa)
+
+			setTarefas((prev: ITarefa[]) => [...prev, novaTarefa])
+			setEntrada('')
 		}
 	}
 
 	return (
 		<form className={styles.container}>
-			<CampoTexto valor={novaTarefa} setValor={setNovaTarefa} />
+			<CampoTexto
+				valor={entrada}
+				setValor={setEntrada}
+			/>
 			<Botao tipo='submit' aoClicar={cadastrarNovaTarefa}>
 				<FontAwesomeIcon icon={faPlus} />
 			</Botao>
