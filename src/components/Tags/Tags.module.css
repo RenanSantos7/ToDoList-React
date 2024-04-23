@@ -1,6 +1,7 @@
 .tag {
     border-radius: 18rem;
     background-color: var(--corDestaque);
+    color: var(--bg);
     padding: .25rem .5rem;
     cursor: pointer;
     opacity: 50%;

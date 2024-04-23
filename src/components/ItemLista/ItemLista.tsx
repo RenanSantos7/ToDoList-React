@@ -6,6 +6,7 @@ import { useContext, useState, useEffect, ChangeEvent, useRef } from 'react'
 import { TarefasContext } from '../../contexts/TarefasContext.tsx'
 import Tags from '../Tags/Tags.tsx'
 import CheckBox from '../CheckBox/CheckBox.tsx'
+import classNames from 'classnames'
 
 interface ItemListaProps {
 	item: ITarefa
@@ -16,11 +17,6 @@ export default function ItemLista({ item }: ItemListaProps) {
 	const [editavel, setEditavel] = useState(false)
 	const [itemTexto, setItemTexto] = useState('')
 	const textoRef = useRef<HTMLInputElement>()
-	const itemCompleto = {
-		opacity: '0.5',
-		textDecoration: 'line-through',
-		fontStyle: 'italic'
-	}
 
 	function aoChecar() {
 		const tarefasMod = tarefas.map((tarefa: ITarefa) => {
@@ -74,14 +70,11 @@ export default function ItemLista({ item }: ItemListaProps) {
 	return (
 		<div className={styles.container}>
 			<label className={styles.campo}>
-				<CheckBox
-					aoMudar={aoChecar}
-				/>
-				<span
-					style={item.completo ? itemCompleto : {}}
-				>
-					{editavel
-						? <input
+				<CheckBox checked={item.completo} aoMudar={aoChecar} />
+				
+				<span className={classNames(item.completo && styles.itemCompleto)}>
+					{editavel ? (
+						<input
 							value={itemTexto}
 							onChange={(evt: ChangeEvent) => {
 								setItemTexto((evt.target as HTMLInputElement).value)
@@ -91,17 +84,12 @@ export default function ItemLista({ item }: ItemListaProps) {
 							autoFocus
 							onBlur={() => setEditavel(false)}
 						/>
-						: item.titulo
-					}
+					) : (
+						item.titulo
+					)}
 				</span>
 
-				<span className={styles.tags}>
-					{item.tags && 
-						item.tags.map(tag => (
-							<Tags titulo={tag} /> 
-						))
-					}
-				</span>
+				<span className={styles.tags}>{item.tags && item.tags.map((tag, i) => <Tags key={i} titulo={tag} />)}</span>
 			</label>
 			<div className={styles.controles}>
 				{/* <FontAwesomeIcon icon={faPencil} onClick={editar} /> */}
