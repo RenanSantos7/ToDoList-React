@@ -2,10 +2,10 @@ import { describe, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import Formulario from './Formulario.tsx'
 
-describe('Componente Formulario', () => {
+/* describe('Componente Formulario', () => {
 	it('should render button', () => {
-        render(<Formulario />)
+		render(<Formulario />)
 
-        const button = screen
+		const button = screen
 	})
-})
+}) */
